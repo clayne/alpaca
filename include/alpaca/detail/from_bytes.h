@@ -83,8 +83,13 @@ from_bytes(T &value, Container &bytes, std::size_t &current_index,
     // default initialize the value
     value = T();
 
-    // return true for forward compatibility
-    return true;
+    // return true for forward compatibility, unless strict mode is enabled
+    if constexpr (detail::strict<O>()) {
+      error_code = std::make_error_code(std::errc::bad_message);
+      return false;
+    } else {
+      return true;
+    }
   }
 
   if constexpr (std::is_same_v<T, uint8_t> || std::is_same_v<T, int8_t>) {
@@ -136,8 +141,13 @@ from_bytes(T &value, Container &bytes, std::size_t &current_index,
     // default initialize the value
     value = T();
 
-    // return true for forward compatibility
-    return true;
+    // return true for forward compatibility, unless strict mode is enabled
+    if constexpr (detail::strict<O>()) {
+      error_code = std::make_error_code(std::errc::bad_message);
+      return false;
+    } else {
+      return true;
+    }
   }
 
   if constexpr (std::is_same_v<T, uint8_t> || std::is_same_v<T, int8_t>) {
@@ -189,8 +199,13 @@ from_bytes(T &value, Container &bytes, std::size_t &current_index,
     // default initialize the value
     value = T();
 
-    // return true for forward compatibility
-    return true;
+    // return true for forward compatibility, unless strict mode is enabled
+    if constexpr (detail::strict<O>()) {
+      error_code = std::make_error_code(std::errc::bad_message);
+      return false;
+    } else {
+      return true;
+    }
   }
 
   if constexpr (std::is_same_v<T, uint8_t> || std::is_same_v<T, int8_t>) {
@@ -232,7 +247,7 @@ typename std::enable_if<
          std::is_same_v<T, std::size_t>),
     bool>::type
 from_bytes(T &value, Container &bytes, std::size_t &current_index,
-           std::size_t &end_index, std::error_code &) {
+           std::size_t &end_index, std::error_code &error_code) {
 
   if (current_index >= end_index) {
     // end of input
@@ -240,8 +255,13 @@ from_bytes(T &value, Container &bytes, std::size_t &current_index,
     // default initialize the value
     value = T();
 
-    // return true for forward compatibility
-    return true;
+    // return true for forward compatibility, unless strict mode is enabled
+    if constexpr (detail::strict<O>()) {
+      error_code = std::make_error_code(std::errc::bad_message);
+      return false;
+    } else {
+      return true;
+    }
   }
 
   constexpr auto use_fixed_length_encoding = (
@@ -281,7 +301,7 @@ typename std::enable_if<
          std::is_same_v<T, std::size_t>),
     bool>::type
 from_bytes(T &value, Container &bytes, std::size_t &current_index,
-           std::size_t &end_index, std::error_code &) {
+           std::size_t &end_index, std::error_code &error_code) {
 
   if (current_index >= end_index) {
     // end of input
@@ -289,8 +309,13 @@ from_bytes(T &value, Container &bytes, std::size_t &current_index,
     // default initialize the value
     value = T();
 
-    // return true for forward compatibility
-    return true;
+    // return true for forward compatibility, unless strict mode is enabled
+    if constexpr (detail::strict<O>()) {
+      error_code = std::make_error_code(std::errc::bad_message);
+      return false;
+    } else {
+      return true;
+    }
   }
 
   constexpr auto use_fixed_length_encoding = (
@@ -330,7 +355,7 @@ typename std::enable_if<
          std::is_same_v<T, std::size_t>),
     bool>::type
 from_bytes(T &value, Container &bytes, std::size_t &current_index,
-           std::size_t &end_index, std::error_code &) {
+           std::size_t &end_index, std::error_code &error_code) {
 
   if (current_index >= end_index) {
     // end of input
@@ -338,8 +363,13 @@ from_bytes(T &value, Container &bytes, std::size_t &current_index,
     // default initialize the value
     value = T();
 
-    // return true for forward compatibility
-    return true;
+    // return true for forward compatibility, unless strict mode is enabled
+    if constexpr (detail::strict<O>()) {
+      error_code = std::make_error_code(std::errc::bad_message);
+      return false;
+    } else {
+      return true;
+    }
   }
 
   constexpr auto use_fixed_length_encoding = (
@@ -382,8 +412,13 @@ from_bytes(T &value, Container &bytes, std::size_t &current_index,
     // default initialize the value
     value = T();
 
-    // return true for forward compatibility
-    return true;
+    // return true for forward compatibility, unless strict mode is enabled
+    if constexpr (detail::strict<O>()) {
+      error_code = std::make_error_code(std::errc::bad_message);
+      return false;
+    } else {
+      return true;
+    }
   }
 
   using underlying_type = typename std::underlying_type<T>::type;
