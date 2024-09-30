@@ -10,6 +10,7 @@ enum class options {
   with_version = 4,
   with_checksum = 8,
   force_aligned_access = 16,
+  strict = 32,
 };
 
 template <typename E> struct enable_bitmask_operators {
@@ -56,6 +57,10 @@ template <options O> constexpr bool with_checksum() {
 
 template <options O> constexpr bool force_aligned_access() {
   return enum_has_flag<options, O, options::force_aligned_access>();
+}
+
+template <options O> constexpr bool strict() {
+  return enum_has_flag<options, O, options::strict>();
 }
 
 } // namespace detail

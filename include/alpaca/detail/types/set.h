@@ -109,8 +109,13 @@ bool from_bytes(std::set<T> &output, Container &bytes, std::size_t &byte_index,
 
   if (byte_index >= end_index) {
     // end of input
-    // return true for forward compatibility
-    return true;
+    // return true for forward compatibility, unless strict mode is enabled
+    if constexpr (detail::strict<O>()) {
+      error_code = std::make_error_code(std::errc::bad_message);
+      return false;
+    } else {
+      return true;
+    }
   }
 
   from_bytes_to_set<O>(output, bytes, byte_index, end_index, error_code);
@@ -126,8 +131,13 @@ bool from_bytes(std::unordered_set<T> &output, Container &bytes,
 
   if (byte_index >= end_index) {
     // end of input
-    // return true for forward compatibility
-    return true;
+    // return true for forward compatibility, unless strict mode is enabled
+    if constexpr (detail::strict<O>()) {
+      error_code = std::make_error_code(std::errc::bad_message);
+      return false;
+    } else {
+      return true;
+    }
   }
 
   from_bytes_to_set<O>(output, bytes, byte_index, end_index, error_code);

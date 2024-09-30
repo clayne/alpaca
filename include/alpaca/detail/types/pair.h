@@ -44,8 +44,13 @@ bool from_bytes(std::pair<T, U> &output, Container &bytes,
 
   if (byte_index >= end_index) {
     // end of input
-    // return true for forward compatibility
-    return true;
+    // return true for forward compatibility, unless strict mode is enabled
+    if constexpr (detail::strict<O>()) {
+      error_code = std::make_error_code(std::errc::bad_message);
+      return false;
+    } else {
+      return true;
+    }
   }
 
   from_bytes_router<O>(output.first, bytes, byte_index, end_index, error_code);

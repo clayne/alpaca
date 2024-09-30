@@ -44,8 +44,13 @@ from_bytes(std::basic_string<CharType> &value, Container &bytes,
   value.clear();
   if (current_index >= end_index) {
     // end of input
-    // return true for forward compatibility
-    return true;
+    // return true for forward compatibility, unless strict mode is enabled
+    if constexpr (detail::strict<O>()) {
+      error_code = std::make_error_code(std::errc::bad_message);
+      return false;
+    } else {
+      return true;
+    }
   }
 
   // current byte is the length of the string
@@ -84,8 +89,13 @@ from_bytes(std::basic_string<CharType> &value, Container &bytes,
   value.clear();
   if (current_index >= end_index) {
     // end of input
-    // return true for forward compatibility
-    return true;
+    // return true for forward compatibility, unless strict mode is enabled
+    if constexpr (detail::strict<O>()) {
+      error_code = std::make_error_code(std::errc::bad_message);
+      return false;
+    } else {
+      return true;
+    }
   }
 
   // current byte is the length of the string
